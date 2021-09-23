@@ -182,3 +182,111 @@ if __name__ == '__main__':
     average = functools.reduce(sum, currentGrades) / len(currentGrades)
 
     print(format(average, ".2f"))
+
+# Lists
+
+if __name__ == '__main__':
+    N = int(input())
+    output = []
+
+    for n in range(N):
+        commands = (input().split(' '))
+        if(commands[0] == 'insert'):
+            output.insert(int(commands[1]), int(commands[2]))
+        elif(commands[0] == 'print'):
+            print(output)
+        elif(commands[0] == 'remove'):
+            output.remove(int(commands[1]))
+        elif(commands[0] == 'append'):
+            output.append(int(commands[1]))
+        elif(commands[0] == 'sort'):
+            output.sort()
+        elif(commands[0] == 'pop'):
+            output.pop()
+        elif(commands[0] == 'reverse'):
+            output.reverse()
+
+# Tuples
+
+if __name__ == '__main__':
+    n = int(raw_input())
+    integer_list = map(int, raw_input().split())
+    tpl = tuple(integer_list)
+    print hash(tpl)
+
+
+# sWAP cASE
+
+def swap_case(s):
+    output = ''
+    for char in s:
+        if(char.islower()):
+            output = output + char.upper()
+        else:
+            output = output + char.lower()
+    return output
+
+
+if __name__ == '__main__':
+    s = raw_input()
+    result = swap_case(s)
+    print result
+
+
+# String Split and Join
+
+def split_and_join(line):
+    return "-".join(line.split(' '))
+
+
+if __name__ == '__main__':
+    line = raw_input()
+    result = split_and_join(line)
+    print result
+
+
+# What's Your Name?
+
+def print_full_name(first, last):
+    print 'Hello {} {}! You just delved into python.'.format(first, last)
+
+
+if __name__ == '__main__':
+    first_name = raw_input()
+    last_name = raw_input()
+    print_full_name(first_name, last_name)
+
+# Mutations
+
+
+def mutate_string(string, position, character):
+    return string[:position] + character + string[(position+1):]
+
+
+if __name__ == '__main__':
+    s = input()
+    i, c = input().split()
+    s_new = mutate_string(s, int(i), c)
+    print(s_new)
+
+# Find a string
+
+
+def count_substring(string, sub_string):
+    control = True
+    count = start = 0
+    while(control):
+        start = string.find(sub_string, start) + 1
+        if(start > 0):
+            count += 1
+        else:
+            control = False
+    return count
+
+
+if __name__ == '__main__':
+    string = input().strip()
+    sub_string = input().strip()
+
+    count = count_substring(string, sub_string)
+    print(count)
