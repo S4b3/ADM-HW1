@@ -1,6 +1,7 @@
 # Say "Hello, World!" With Python
 
 from __future__ import print_function
+import textwrap
 import functools
 if __name__ == '__main__':
     print("Hello, World!")
@@ -290,3 +291,164 @@ if __name__ == '__main__':
 
     count = count_substring(string, sub_string)
     print(count)
+
+# String Validators
+
+if __name__ == '__main__':
+    s = input()
+    print(len([char for char in s if char.isalnum()]) > 0)
+    print(len([char for char in s if char.isalpha()]) > 0)
+    print(len([char for char in s if char.isdigit()]) > 0)
+    print(len([char for char in s if char.islower()]) > 0)
+    print(len([char for char in s if char.isupper()]) > 0)
+
+# Text Alignment
+
+
+thickness = int(input())  # This must be an odd number
+c = 'H'
+
+# Top Cone
+for i in range(thickness):
+    print((c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1))
+
+# Top Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))
+
+# Middle Belt
+for i in range((thickness+1)//2):
+    print((c*thickness*5).center(thickness*6))
+
+# Bottom Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))
+
+# Bottom Cone
+for i in range(thickness):
+    print(((c*(thickness-i-1)).rjust(thickness)+c +
+          (c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))
+
+# Text Wrap
+
+
+def wrap(string, max_width):
+
+    return "\n".join([string[i:i+max_width] for i in range(0, len(string), max_width)])
+
+
+if __name__ == '__main__':
+    string, max_width = input(), int(input())
+    result = wrap(string, max_width)
+    print(result)
+
+# Designer Door Mat
+
+n, m = map(int, input().split())
+
+for i in range(1, n, 2):
+    print((i * ".|.").center(m, "-"))
+print("WELCOME".center(m, "-"))
+for i in range(n-2, -1, -2):
+    print((i * ".|.").center(m, "-"))
+
+# String Formatting
+
+
+def print_formatted(number):
+    # your code goes here
+    width = len(format(number, 'b'))
+    for i in range(1, n+1):
+        print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(
+            i, width=width))
+
+
+if __name__ == '__main__':
+    n = int(input())
+    print_formatted(n)
+
+# Alphabet Rangoli
+
+
+def print_rangoli(size):
+    last_letter = chr(size)
+    rows = []
+    for i in range(1, n+1):
+        row = []
+        for j in range(0, i):
+            row.append(chr(ord('a') + n-j - 1))
+        rowReverse = list(row)
+        rowReverse.reverse()
+        ''' 9 elementi vuol dire [(5*2) - 1] + ((5*2 - 1) / 2) '''
+        amount = ((size * 2) - 1) + ((size * 2) - 2)
+        output = '-'.join(row + rowReverse[1:]).center(amount, '-')
+        rows.append(output)
+        print(output)
+
+    rows.reverse()
+    for row in rows[1:]:
+        print(row)
+
+
+if __name__ == '__main__':
+    n = int(input())
+    print_rangoli(n)
+
+# Capitalize!
+
+#!/bin/python3
+
+
+# Complete the solve function below.
+
+def solve(s):
+    return ' '.join([s.capitalize() for s in s.split(' ')])
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    s = input()
+
+    result = solve(s)
+
+    fptr.write(result + '\n')
+
+    fptr.close()
+
+# The Minion Game
+
+
+def minion_game(string):
+    vowels = 'AEIOU'
+    kevin = 0
+    stuart = 0
+    for i in range(len(s)):
+        if s[i] in vowels:
+            kevin += (len(s)-i)
+        else:
+            stuart += (len(s)-i)
+    if kevin > stuart:
+        print("Kevin", kevin)
+    elif kevin < stuart:
+        print("Stuart", stuart)
+    else:
+        print("Draw")
+
+
+if __name__ == '__main__':
+    s = input()
+    minion_game(s)
+
+# Merge the Tools!
+
+
+def merge_the_tools(string, k):
+    splits = [string[i*k:(i+1)*k] for i in range(len(string)//k)]
+
+    print('\n'.join(["".join(dict.fromkeys(s)) for s in splits]))
+
+
+if __name__ == '__main__':
+    string, k = input(), int(input())
+    merge_the_tools(string, k)
