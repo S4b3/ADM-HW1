@@ -1,6 +1,9 @@
 # Say "Hello, World!" With Python
 
 from __future__ import print_function
+from collections import namedtuple
+from collections import defaultdict
+from collections import Counter
 import textwrap
 import functools
 if __name__ == '__main__':
@@ -452,3 +455,93 @@ def merge_the_tools(string, k):
 if __name__ == '__main__':
     string, k = input(), int(input())
     merge_the_tools(string, k)
+
+# collections.Counter()
+
+
+if __name__ == '__main__':
+    shoesAmount = input()
+    shoes = Counter(list(map(int, input().split())))
+    moneyEarned = 0
+    for i in range(0, int(input())):
+        shoe, price = map(int, input().split())
+        if(int(shoes[shoe]) > 0):
+            shoes[shoe] -= 1
+            moneyEarned += price
+    print(moneyEarned)
+
+# DefaultDict Tutorial
+
+
+if(__name__ == '__main__'):
+    n, m = map(int, input().split())
+    dictionary = defaultdict(list)
+
+    for i in range(0, n):
+        dictionary[input()].append(i+1)
+    for i in range(0, m):
+        print(" ".join(map(str, dictionary[input()])) or '-1')
+
+# Collections.namedtuple()
+
+n = int(input())
+Student = namedtuple('Student', map(str, input().split()))
+studs = list([Student._make(map(str, input().split())) for i in range(0, n)])
+print("{:.2f}".format(sum(int(s.MARKS) for s in studs) / len(studs)))
+
+# Introduction to Sets
+
+
+def average(array):
+    hset = set(array)
+    hsum = 0
+    for el in hset:
+        hsum += el
+    return hsum / len(hset)
+
+
+if __name__ == '__main__':
+    n = int(input())
+    arr = list(map(int, input().split()))
+    result = average(arr)
+    print(result)
+
+# Symmetric Difference
+
+n = int(input())
+a = set(map(int, input().split()))
+m = int(input())
+b = set(map(int, input().split()))
+dif = list(el for el in a.difference(b).union(b.difference(a)))
+dif.sort()
+for el in dif:
+    print(str(el))
+
+# No Idea!
+
+n, m = input().split()
+happy = input().split()
+A = set(input().split())
+B = set(input().split())
+print(sum([(i in A) - (i in B) for i in happy]))
+
+# Set .add()
+
+output = set()
+for i in range(0, int(input())):
+    output.add(input())
+print(len(output))
+
+# Set .discard(), .remove() & .pop()
+
+n = int(input())
+s = set(map(int, input().split()))
+for i in range(0, int(input())):
+    command = input().split()
+    if(command[0] == 'remove' and int(command[1]) in s):
+        s.remove(int(command[1]))
+    elif (command[0] == 'discard'):
+        s.discard(int(command[1]))
+    else:
+        s.pop()
+print(sum(s))
