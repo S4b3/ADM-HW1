@@ -1,6 +1,10 @@
 # Say "Hello, World!" With Python
 
-from __future__ import print_function
+# from __future__ import print_function
+from collections import deque
+from collections import Counter, OrderedDict
+import datetime
+import calendar
 from collections import namedtuple
 from collections import defaultdict
 from collections import Counter
@@ -20,7 +24,7 @@ import re
 import sys
 
 if __name__ == '__main__':
-    n = int(raw_input().strip())
+    n = int(input().strip())
 
     # Limit case
     if n > 100 or n < 1:
@@ -40,8 +44,8 @@ if __name__ == '__main__':
 # Arithmetic Operators
 
 if __name__ == '__main__':
-    a = int(raw_input())
-    b = int(raw_input())
+    a = int(input())
+    b = int(input())
 
     ceil = 10 ** 10
     if not (a >= 1 and a <= ceil and b >= 1 and b <= ceil):
@@ -52,11 +56,11 @@ if __name__ == '__main__':
 
 # Python: Division
 
-from __future__ import division
+# from __future__ import division
 
 if __name__ == '__main__':
-    a = int(raw_input())
-    b = int(raw_input())
+    a = int(input())
+    b = int(input())
 
     print(a//b)
     print(a/b)
@@ -64,7 +68,7 @@ if __name__ == '__main__':
 # Loops
 
 if __name__ == '__main__':
-    n = int(raw_input())
+    n = int(input())
 
     for i in range(n):
         if(i >= 0):
@@ -88,25 +92,25 @@ def is_leap(year):
     return leap
 
 
-year = int(raw_input())
-print is_leap(year)
+year = int(input())
+print(is_leap(year))
 
 # Print Function
 
 if __name__ == '__main__':
-    n = int(raw_input())
+    n = int(input())
     if(n < 1 or n > 150):
         sys.exit()
-    for i in xrange(1, n+1):
+    for i in range(1, n+1):
         print(i, end='')
 
 # List Comprehensions
 
 if __name__ == '__main__':
-    x = int(raw_input())
-    y = int(raw_input())
-    z = int(raw_input())
-    n = int(raw_input())
+    x = int(input())
+    y = int(input())
+    z = int(input())
+    n = int(input())
 
     output = []
     for i in range(x+1):
@@ -121,8 +125,8 @@ if __name__ == '__main__':
 
 
 if __name__ == '__main__':
-    n = int(raw_input())
-    arr = map(int, raw_input().split())
+    n = int(input())
+    arr = map(int, input().split())
 
     arr.sort(reverse=True)
     for i in arr:
@@ -143,9 +147,9 @@ def useFirstElementInArray(e):
 
 if __name__ == '__main__':
     students = []
-    for _ in range(int(raw_input())):
-        name = raw_input()
-        score = float(raw_input())
+    for _ in range(int(input())):
+        name = input()
+        score = float(input())
         students.append([name, score])
     # sort input
     students.sort(key=useSecondElementInArray)
@@ -213,10 +217,10 @@ if __name__ == '__main__':
 # Tuples
 
 if __name__ == '__main__':
-    n = int(raw_input())
-    integer_list = map(int, raw_input().split())
+    n = int(input())
+    integer_list = map(int, input().split())
     tpl = tuple(integer_list)
-    print hash(tpl)
+    print(hash(tpl))
 
 
 # sWAP cASE
@@ -232,9 +236,9 @@ def swap_case(s):
 
 
 if __name__ == '__main__':
-    s = raw_input()
+    s = input()
     result = swap_case(s)
-    print result
+    print(result)
 
 
 # String Split and Join
@@ -244,20 +248,20 @@ def split_and_join(line):
 
 
 if __name__ == '__main__':
-    line = raw_input()
+    line = input()
     result = split_and_join(line)
-    print result
+    print(result)
 
 
 # What's Your Name?
 
 def print_full_name(first, last):
-    print 'Hello {} {}! You just delved into python.'.format(first, last)
+    print('Hello {} {}! You just delved into python.'.format(first, last))
 
 
 if __name__ == '__main__':
-    first_name = raw_input()
-    last_name = raw_input()
+    first_name = input()
+    last_name = input()
     print_full_name(first_name, last_name)
 
 # Mutations
@@ -545,3 +549,243 @@ for i in range(0, int(input())):
     else:
         s.pop()
 print(sum(s))
+
+# Calendar Module
+
+m, d, y = map(int, input().split())
+print((calendar.day_name[calendar.weekday(y, m, d)]).upper())
+
+# Time Delta
+#!/bin/python3
+
+
+def time_delta(t1, t2):
+    d1 = datetime.datetime.strptime(t1, '%a %d %b %Y %H:%M:%S %z')
+    d2 = datetime.datetime.strptime(t2, '%a %d %b %Y %H:%M:%S %z')
+    return str(abs(int((d1 - d2).total_seconds())))
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input())
+
+    for t_itr in range(t):
+        t1 = input()
+
+        t2 = input()
+
+        delta = time_delta(t1, t2)
+
+        fptr.write(delta + '\n')
+
+    fptr.close()
+
+# Exceptions
+
+n = int(input())
+
+for i in range(0, n):
+    try:
+        a, b = map(int, input().split())
+        print(a // b)
+    except ZeroDivisionError as e:
+        print("Error Code: integer division or modulo by zero")
+    except ValueError as e:
+        print("Error Code:", e)
+
+# Collections.OrderedDict()
+
+items = dict()
+for i in range(int(input())):
+    key, i, value = input().rpartition(" ")
+    items[key] = items.get(key, 0) + int(value)
+for k, v in items.items():
+    print(k, v)
+
+# Set .union() Operation
+
+n = input()
+a = set(input().split())
+m = input()
+b = set(input().split())
+print(len(a.union(b)))
+
+# Set .intersection() Operation
+
+_, a = input(), set(input().split())
+_, b = input(), set(input().split())
+print(len(a.intersection(b)))
+
+# Set .difference() Operation
+
+_, a = input(), set(input().split())
+_, b = input(), set(input().split())
+print(len(a.difference(b)))
+
+# Set .symmetric_difference() Operation
+
+_, a = input(), set(input().split())
+_, b = input(), set(input().split())
+print(len(a.symmetric_difference(b)))
+
+# Set Mutations
+
+if __name__ == '__main__':
+    (_, a) = (int(input()), set(map(int, input().split())))
+    b = int(input())
+    for _ in range(b):
+        (command, newSet) = (input().split()
+                             [0], set(map(int, input().split())))
+        getattr(a, command)(newSet)
+
+    print(sum(a))
+
+
+# The Captain's Room
+
+k, arr = int(input()), list(map(int, input().split()))
+myset = set(arr)
+
+print(((sum(myset)*k)-(sum(arr)))//(k-1))
+
+# Check Subset
+
+
+for i in range(0, int(input())):
+    lenA, a, lenB, b = int(input()), list(map(int, input().split())), int(
+        input()), list(map(int, input().split()))
+    output = True
+    for el in a:
+        if not el in b:
+            output = False
+            break
+    print(output)
+
+# Check Strict Superset
+
+a = set(input().split())
+print(all([a.issuperset(set(input().split())) for _ in range(int(input()))]))
+
+# Incorrect Regex
+
+for i in range(int(input())):
+    try:
+        print(bool(re.compile(input())))
+    except re.error:
+        print('False')
+
+# Word Order
+
+
+class CounterDictionary(Counter, OrderedDict):
+    pass
+
+
+d = CounterDictionary(input() for _ in range(int(input())))
+print(len(d))
+print(" ".join(str(el) for el in d.values()))
+
+# Collections.deque()
+
+
+d = deque()
+for _ in range(int(input())):
+    func, *num = input().split()
+    getattr(d, func)(*num)
+print(' '.join(d))
+
+# Company Logo
+
+#!/bin/python3
+
+
+class CounterDictionary(Counter, OrderedDict):
+    pass
+
+
+if __name__ == '__main__':
+    s = input()
+    letters = CounterDictionary(sorted(s)).most_common(3)
+    [print(*letter) for letter in letters]
+
+# Piling Up!
+
+
+def highest(a, b):
+    if a >= b:
+        return a
+    return b
+
+
+def stackable(n, blocks):
+    curr = highest(blocks[0], blocks[-1])
+    for _ in range(0, n):
+        el = highest(blocks[0], blocks[-1])
+        if el > curr:
+            return('No')
+        elif el == blocks[0]:
+            curr = blocks[0]
+            blocks.popleft()
+        else:
+            curr = blocks[-1]
+            blocks.pop()
+    return('Yes')
+
+
+for _ in range(0, int(input())):
+    n = int(input())
+    blocks = deque(map(int, input().split()))
+    print(stackable(n, blocks))
+
+# Zipped!
+
+n, x = map(int, input().split())
+s = [list(map(float, input().split())) for _ in range(x)]
+out = list(zip(*s))
+for i in range(n):
+    print("%0.1f" % (sum(out[i])/x))
+
+
+# Athlete Sort
+
+#!/bin/python3
+
+
+if __name__ == '__main__':
+    nm = input().split()
+
+    n = int(nm[0])
+
+    m = int(nm[1])
+
+    arr = []
+
+    for _ in range(n):
+        arr.append(list(map(int, input().rstrip().split())))
+
+    k = int(input())
+
+    for el in sorted(arr, key=lambda row: row[k]): print(*el)
+
+# ginortS
+
+s = input()
+s = sorted(s, key=lambda char: (char.isdigit() and int(char) %
+           2 == 0, char.isdigit(), char.isupper(), char.islower(), char))
+print(*s, sep='')
+
+# Map and Lambda Function
+
+
+def cube(x): return x ** 3
+
+
+def fibonacci(n):
+    def fib(k): return k if k < 2 else fib(k - 1) + fib(k - 2)
+    return list(map(fib, range(n)))
+
+
+if __name__ == '__main__':
+    n = int(input())
+    print(list(map(cube, fibonacci(n))))
