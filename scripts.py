@@ -1,6 +1,10 @@
 # Say "Hello, World!" With Python
 
 # from __future__ import print_function
+import operator
+import xml.etree.ElementTree as etree
+from html.parser import HTMLParser
+import email.utils
 from collections import deque
 from collections import Counter, OrderedDict
 import datetime
@@ -789,3 +793,268 @@ def fibonacci(n):
 if __name__ == '__main__':
     n = int(input())
     print(list(map(cube, fibonacci(n))))
+
+# Detect Floating Point Number
+
+for _ in range(int(input())):
+    print(bool(re.match(r'^[-+]?[0-9]*\.[0-9]+$', input())))
+
+# Re.split()
+
+regex_pattern = r"[.,]+"
+print("\n".join(re.split(regex_pattern, input())))
+
+# Group(), Groups() & Groupdict()
+
+m = re.search(r"([a-zA-Z0-9])\1+", input())
+print(m.group(1) if m else -1)
+
+# Re.findall() & Re.finditer()
+
+vowels = 'aeiouAEIOU'
+a = re.findall(r'(?<=[^%s])([%s]{2,})[^%s]' %
+               (vowels, vowels, vowels), input())
+print('\n'.join(a or ['-1']))
+
+# Re.start() & Re.end()
+
+S = input()
+k = input()
+m = re.search(k, S)
+if not m:
+    print("(-1, -1)")
+while m:
+    print("({0}, {1})".format(m.start(), m.end()-1))
+    m = re.compile(k).search(S, m.start()+1)
+
+# Regex Substitution
+
+reg = r'(?<= )(&&|\|\|)(?= )'
+
+print('\n'.join(re.sub(reg, lambda x: 'and' if x.group() ==
+      '&&' else 'or', input()) for _ in range(int(input().strip()))))
+
+# Validating phone numbers
+
+
+reg = r'[789][0-9]{9}$'
+[print('YES' if re.match(reg, input()) else 'NO') for _ in range(int(input()))]
+
+# Validating and Parsing Email Addresses
+
+# reg for email validation... iso wasn't working?
+regex = r'^[a-zA-Z]+[a-zA-Z0-9_.-]+[@][a-zA-Z]+[.][a-zA-Z]{1,3}$'
+
+for _ in range(int(input())):
+    a, b = map(str, email.utils.parseaddr(input()))
+    if re.search(regex, b):
+        print(email.utils.formataddr((a, b)))
+
+# Hex Color Code
+
+reg = r'(#[0-9a-fA-F]{3,6})[^\n ]'
+for _ in range(int(input())):
+    [print(x) for x in re.findall(reg, input())]
+
+# HTML Parser - Part 1
+
+
+class HTMLCustomParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print('Start :', tag)
+        for el in attrs:
+            print('->', el[0], '>', el[1])
+
+    def handle_endtag(self, tag):
+        print('End   :', tag)
+
+    def handle_startendtag(self, tag, attrs):
+        print('Empty :', tag)
+        for el in attrs:
+            print('->', el[0], '>', el[1])
+
+
+MyParser = HTMLCustomParser()
+MyParser.feed(''.join([input().strip() for _ in range(int(input()))]))
+
+# HTML Parser - Part 2
+
+
+class MyHTMLParser(HTMLParser):
+    def handle_comment(self, data):
+        lines = len(data.split('\n'))
+        if lines > 1:
+            print('>>> Multi-line Comment')
+        else:
+            print('>>> Single-line Comment')
+        if data.strip():
+            print(data)
+
+    def handle_data(self, data):
+        if data.strip():
+            print(">>> Data")
+            print(data)
+
+
+html = ""
+for i in range(int(input())):
+    html += input().rstrip()
+    html += '\n'
+
+parser = MyHTMLParser()
+parser.feed(html)
+parser.close()
+
+
+# Detect HTML Tags, Attributes and Attribute Values
+
+
+class CustomHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print(tag)
+        [print('-> {} > {}'.format(*attr)) for attr in attrs]
+
+
+html = '\n'.join([input() for _ in range(int(input()))])
+parser = CustomHTMLParser()
+parser.feed(html)
+parser.close()
+
+# XML 1 - Find the Score
+
+
+def get_attr_number(node):
+    return (sum([len(el.attrib) for el in node.iter()]))
+
+
+if __name__ == '__main__':
+    sys.stdin.readline()
+    xml = sys.stdin.read()
+    tree = etree.ElementTree(etree.fromstring(xml))
+    root = tree.getroot()
+    print(get_attr_number(root))
+
+# Validating UID
+
+
+for _ in range(int(input())):
+    s = ''.join(sorted(input()))
+
+    checks = [r'[A-Z]{2,}', r'[0-9]{3,}', r'[^a-zA-Z0-9]{0}', r'.{10}']
+    control = True
+    i = 0
+    while(control and i < len(checks)):
+        control = re.search(checks[i], s) != None
+        i += 1
+    if(control):
+        control = re.search(r'(.)\1', s) == None
+    print('Valid') if control else print('Invalid')
+
+
+# Validating Credit Card Numbers
+
+
+reg1 = r'^[456](\d){15}(?!(.)\{5,})'
+reg2 = r'(?=^[456])(?:-?\d{4}){4}'
+reg3 = r'(\d)(-?\1){3}'
+
+for _ in range(int(input().strip())):
+    cc = input().strip()
+    print("Valid" if (re.search(reg1, cc) or re.search(reg2, cc))
+          and not re.search(reg3, cc) else "Invalid")
+
+# Validating Credit Card Numbers
+
+
+reg1 = r'^[456](\d){15}(?!(.)\{5,})$'
+reg2 = r'(?=^[456])(?=(.){19})(?:-?\d{4}){4}$'
+reg3 = r'(\d)(-?\1){3}'
+
+for _ in range(int(input().strip())):
+
+    cc = input().strip()
+    print("Valid" if (re.search(reg1, cc) or re.search(reg2, cc))
+          and not re.search(reg3, cc) else "Invalid")
+
+# XML2 - Find the Maximum Depth
+
+maxdepth = 0
+
+
+def depth(elem, level):
+    global maxdepth
+    level += 1
+    if level >= maxdepth:
+        maxdepth = level
+    for child in elem:
+        depth(child, level)
+
+# Standardize Mobile Number Using Decorators
+
+
+if __name__ == '__main__':
+    n = int(input())
+    xml = ""
+    for i in range(n):
+        xml = xml + input() + "\n"
+    tree = etree.ElementTree(etree.fromstring(xml))
+    depth(tree.getroot(), -1)
+    print(maxdepth)
+
+
+def wrapper(f):
+    def fun(l):
+        decorated_l = ['+91 {} {}'.format(n[-10: -5], n[-5:]) for n in l]
+        return f(decorated_l)
+    return fun
+
+
+@wrapper
+def sort_phone(l):
+    print(*sorted(l), sep='\n')
+
+
+if __name__ == '__main__':
+    l = [input() for _ in range(int(input()))]
+    sort_phone(l)
+
+# Decorators 2 - Name Directory
+
+
+def person_lister(f):
+    def inner(people):
+        return map(f, sorted(people, key=lambda x: int(x[2])))
+    return inner
+
+
+@person_lister
+def name_format(person):
+    return ("Mr. " if person[3] == "M" else "Ms. ") + person[0] + " " + person[1]
+
+
+if __name__ == '__main__':
+    people = [input().split() for i in range(int(input()))]
+    print(*name_format(people), sep='\n')
+
+
+# Matrix Script
+
+#!/bin/python3
+
+
+first_multiple_input = input().rstrip().split()
+
+n = int(first_multiple_input[0])
+
+m = int(first_multiple_input[1])
+
+matrix = []
+
+for _ in range(n):
+    matrix_item = input()
+    matrix.append(matrix_item)
+
+decoded = ''
+for char in [*zip(*matrix)]:
+    decoded += ''.join(char)
+print(re.sub(r'\b[^a-zA-Z0-9]+\b', " ", decoded))
