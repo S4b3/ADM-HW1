@@ -1,6 +1,7 @@
-# Say "Hello, World!" With Python
+
 
 # from __future__ import print_function
+import numpy
 import operator
 import xml.etree.ElementTree as etree
 from html.parser import HTMLParser
@@ -14,6 +15,12 @@ from collections import defaultdict
 from collections import Counter
 import textwrap
 import functools
+
+
+# PROBLEM 1
+
+# Say "Hello, World!" With Python
+
 if __name__ == '__main__':
     print("Hello, World!")
 
@@ -1058,3 +1065,272 @@ decoded = ''
 for char in [*zip(*matrix)]:
     decoded += ''.join(char)
 print(re.sub(r'\b[^a-zA-Z0-9]+\b', " ", decoded))
+
+# Arrays
+
+
+def arrays(arr):
+    return numpy.flip(numpy.array(arr, float))
+
+
+arr = input().strip().split(' ')
+result = arrays(arr)
+print(result)
+
+# Shape and Reshape
+print(numpy.reshape(numpy.array(input().split(), int), (3, 3)))
+
+# Transpose and Flatten
+
+n, m = map(int, input().split())
+cols = []
+for _ in range(n):
+    cols.append(numpy.array(input().split(), int))
+matrix = numpy.array(cols)
+print(numpy.transpose(matrix))
+print(matrix.flatten())
+
+# Concatenate
+
+n, m, p = map(int, input().split())
+arrN = numpy.array([input().split() for _ in range(n)], int)
+arrM = numpy.array([input().split() for _ in range(m)], int)
+print(numpy.concatenate((arrN, arrM), axis=0))
+
+# Zeros and Ones
+
+
+dims = tuple(map(int, input().split()))
+print(numpy.zeros(dims, int))
+print(numpy.ones(dims, int))
+
+# Eye and Identity
+
+r, c = map(int, input().split())
+
+print(str(numpy.eye(r, c, k=0)).replace('1', ' 1').replace('0', ' 0'))
+
+
+# Array Mathematics
+
+n, m = map(int, input().split())
+
+a = numpy.zeros((n, m), int)
+b = numpy.zeros((n, m), int)
+for i in range(n):
+    a[i] = numpy.array(input().split(), int)
+for j in range(n):
+    b[j] = numpy.array(input().split(), int)
+
+print(a+b, a-b, a*b, a//b, a % b, a**b, sep='\n')
+
+# Sum and Prod
+
+n, m = map(int, input().split())
+ar = numpy.array([input().split() for i in range(n)], int)
+print(numpy.prod((numpy.sum(ar, axis=0))))
+
+# Min and Max
+
+n, m = map(int, input().split())
+arr = numpy.array([input().split() for _ in range(n)], int)
+min = numpy.min(arr, axis=1)
+print(numpy.max(min, axis=0))
+
+# Mean, Var, and Std
+
+n, m = map(int, input().strip().split())
+my_array = numpy.array([input().strip().split() for _ in range(n)], int)
+
+print(numpy.mean(my_array, axis=1))
+print(numpy.var(my_array, axis=0))
+print(round(numpy.std(my_array, axis=None), 11))
+
+# Inner and Outer
+
+a = numpy.array(input().split(), int)
+b = numpy.array(input().split(), int)
+print(numpy.inner(a, b), numpy.outer(a, b), sep='\n')
+
+# Dot and Cross
+
+n = int(input())
+a = numpy.array([input().split() for _ in range(n)], int)
+b = numpy.array([input().split() for _ in range(n)], int)
+print(numpy.dot(a, b))
+
+# Polynomials
+
+a = numpy.array(input().split(), float)
+print(numpy.polyval(a, float(input())))
+
+
+# PROBLEM 2
+
+
+# Birthday Cake Candles
+#!/bin/python3
+
+
+def birthdayCakeCandles(candles):
+    c = Counter(candles)
+    return (c[max(c)])
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    candles_count = int(input().strip())
+
+    candles = list(map(int, input().rstrip().split()))
+
+    result = birthdayCakeCandles(candles)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
+
+# Number Line Jumps
+
+
+class Kangaroo:
+    def __init__(self, x, v):
+        self.x = x
+        self.v = v
+
+
+def kangaroo(x1, v1, x2, v2):
+    if(x1 == x2):
+        return 'YES'
+    faster = Kangaroo(x1, v1) if v1 >= v2 else Kangaroo(x2, v2)
+    slower = Kangaroo(x1, v1) if v1 < v2 else Kangaroo(x2, v2)
+    while (faster.x < slower.x):
+        faster.x += faster.v
+        slower.x += slower.v
+        if(faster.x == slower.x):
+            return 'YES'
+    return 'NO'
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    first_multiple_input = input().rstrip().split()
+    x1 = int(first_multiple_input[0])
+    v1 = int(first_multiple_input[1])
+    x2 = int(first_multiple_input[2])
+    v2 = int(first_multiple_input[3])
+    result = kangaroo(x1, v1, x2, v2)
+    fptr.write(result + '\n')
+    fptr.close()
+
+# Viral Advertising
+
+
+def viralAdvertising(n):
+    people = 5
+    liked = 0
+    for _ in range(n):
+        people = people//2
+        liked += people
+        people *= 3
+    return liked
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    n = int(input().strip())
+    result = viralAdvertising(n)
+    fptr.write(str(result) + '\n')
+    fptr.close()
+
+# Recursive Digit Sum
+
+
+def superDigit(n, k):
+    if(len(n) == 1):
+        return int(n)
+    else:
+        # One Liner:
+        # return superDigit(str(sum(list(map(int, str(n)))) * k), 1)
+
+        # Readable :
+        startingNumberDigit = sum(list(map(int, str(n))))
+        # The Sum of a repeated number's digits is the same as
+        # the sum multiplied for the amount of repetitions.
+        # EX: sum(232323) = 15 == 15 = sum(23) * 3
+        kRepeatedDigit = startingNumberDigit * k
+        return superDigit(str(kRepeatedDigit), 1)
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    first_multiple_input = input().rstrip().split()
+
+    n = first_multiple_input[0]
+
+    k = int(first_multiple_input[1])
+    result = superDigit(n, k)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
+
+# Insertion Sort - Part 1
+
+
+def insertionSort1(n, arr):
+    curr = arr[-1]
+    length = len(arr)
+    for i in range(1, length+1):
+        if (i == length):
+            arr[0] = curr
+            print(*arr)
+            return
+        tmp = arr[-(i+1)]
+        if(tmp > curr):
+            arr[-i] = tmp
+            print(*arr)
+        else:
+            arr[-i] = curr
+            print(*arr)
+            return
+
+
+if __name__ == '__main__':
+    n = int(input().strip())
+
+    arr = list(map(int, input().rstrip().split()))
+
+    insertionSort1(n, arr)
+
+# Insertion Sort - Part 2
+#!/bin/python3
+
+
+#
+# Complete the 'insertionSort2' function below.
+#
+# The function accepts following parameters:
+#  1. INTEGER n
+#  2. INTEGER_ARRAY arr
+#
+
+
+def insertionSort2(n, arr):
+    for i in range(1, len(arr)):
+        current = arr[i]
+        j = i-1
+        while j >= 0 and arr[j] > current:
+            arr[j+1] = arr[j]
+            j = j-1
+        arr[j+1] = current
+        print(*arr)
+
+
+if __name__ == '__main__':
+    n = int(input().strip())
+
+    arr = list(map(int, input().rstrip().split()))
+
+    insertionSort2(n, arr)
