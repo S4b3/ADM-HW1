@@ -1,5 +1,3 @@
-
-
 # from __future__ import print_function
 import numpy
 import operator
@@ -1169,8 +1167,6 @@ print(numpy.polyval(a, float(input())))
 
 
 # Birthday Cake Candles
-#!/bin/python3
-
 
 def birthdayCakeCandles(candles):
     c = Counter(candles)
@@ -1193,23 +1189,11 @@ if __name__ == '__main__':
 # Number Line Jumps
 
 
-class Kangaroo:
-    def __init__(self, x, v):
-        self.x = x
-        self.v = v
-
-
 def kangaroo(x1, v1, x2, v2):
-    if(x1 == x2):
-        return 'YES'
-    faster = Kangaroo(x1, v1) if v1 >= v2 else Kangaroo(x2, v2)
-    slower = Kangaroo(x1, v1) if v1 < v2 else Kangaroo(x2, v2)
-    while (faster.x < slower.x):
-        faster.x += faster.v
-        slower.x += slower.v
-        if(faster.x == slower.x):
-            return 'YES'
-    return 'NO'
+    for i in range(0, 10001):
+        if (x1+(v1*i) == x2+(v2*i)):
+            return "YES"
+    return "NO"
 
 
 if __name__ == '__main__':
@@ -1305,16 +1289,6 @@ if __name__ == '__main__':
     insertionSort1(n, arr)
 
 # Insertion Sort - Part 2
-#!/bin/python3
-
-
-#
-# Complete the 'insertionSort2' function below.
-#
-# The function accepts following parameters:
-#  1. INTEGER n
-#  2. INTEGER_ARRAY arr
-#
 
 
 def insertionSort2(n, arr):
